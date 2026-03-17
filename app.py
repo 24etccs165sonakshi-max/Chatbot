@@ -1,14 +1,15 @@
-import google.generativeai as genai
-import os
-import streamlit as st
 from dotenv import load_dotenv
 load_dotenv()
-# Configure API key from Streamlit Secrets
+import streamlit as st
+import os 
+import google.generativeai as genai
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-
-# Make sure this model supports generate_content
 model = genai.GenerativeModel("gemini-2.5-flash")
 
+
+# def my_output(query):
+#     response = model.generate_content(query)
+#     return response.text
 
 def my_output(query: str) -> str:
     if not query.strip():
@@ -18,14 +19,13 @@ def my_output(query: str) -> str:
 
 # UI Development using streamlit
 
-# Streamlit UI
+
 st.set_page_config(page_title="QUERY_BOT")
 st.header("QUERY_BOT")
-
-input_text = st.text_input("Enter your query:", key="input")
+input = st.text_input("Input ", key="input")
 submit = st.button("Ask your query")
 
 if submit:
-    result = my_output(input_text)
-    st.subheader("Response:")
-    st.write(result)
+    response = my_output(input)
+    st.subheader("The Response is=")
+    st.write(response)
